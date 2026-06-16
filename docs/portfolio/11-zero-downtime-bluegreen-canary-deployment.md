@@ -66,6 +66,25 @@ Application rollback은 이전 bundle로 되돌리면 된다. 그러나 DB migra
 
 따라서 DB 변경은 application 배포와 같은 버튼으로 단순화하지 않았다. expand/contract, backward compatibility, dry-run, 검증 query, manual approval 기준을 별도로 둬야 했다.
 
+
+## 버린 선택과 이유
+
+Jenkins job 성공을 배포 완료로 보는 방식은 제외했다. build가 성공해도 운영 적용은 별개의 문제다. 어떤 bundle이 어느 stage에 반영되었는지, 누가 승인했는지, canary가 어떤 기준으로 진행되었는지 남지 않으면 rollback도 불안정해진다.
+
+서버에 직접 산출물을 복사하는 방식도 장기 운영에는 맞지 않았다. 동일한 산출물을 재현할 수 있어야 하고, 승인된 bundle과 실제 배포된 bundle이 같다는 증거가 필요했다. 그래서 versioned bundle 저장소가 필요했다.
+
+DB migration을 application rollback과 같은 절차로 묶는 방식도 피했다. application은 이전 version으로 빠르게 되돌릴 수 있지만, DB schema와 data migration은 비가역 변경을 포함할 수 있다. 따라서 migration은 expand/contract, backward compatibility, dry-run 기준을 별도로 둬야 했다.
+
+## 배포에서 남겨야 하는 증거
+
+| 증거 | 목적 |
+| --- | --- |
+| bundle hash | 승인된 산출물과 배포된 산출물이 같은지 확인한다. |
+| approval record | 배포 승인자, 실행자, 사유를 남긴다. |
+| traffic switch log | blue/green 또는 canary 전환 시점을 재현한다. |
+| health metric snapshot | 전환 판단 근거를 남긴다. |
+| rollback target | 실패 시 돌아갈 version을 명확히 한다. |
+
 ## 운영 시나리오
 
 ### Canary 장애

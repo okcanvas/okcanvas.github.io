@@ -95,6 +95,24 @@ outline: deep
   </div>
 </div>
 
+
+## 문서별 보강 기준
+
+각 문서는 동일한 구조를 따르되, 단순한 템플릿이 되지 않도록 프로젝트별로 확인해야 할 운영 흔적을 다르게 두었다.
+
+| 문서 | 보강한 판단 근거 |
+| --- | --- |
+| Kafka Incident Monitoring | 장애를 로그 검색이 아니라 고객사·도메인·배포·설정 변경 기준으로 분류한 이유 |
+| DUCOS | tenant override와 runtime refresh가 운영 위험이 되는 지점 |
+| OpenResty L7 | 범용 gateway가 아니라 조직 정책 경계가 필요한 이유 |
+| CALS | 근태 데이터가 최신 상태가 아니라 사건 원장으로 남아야 하는 이유 |
+| PlanVM / DBHub | 변경 가능한 업무 정책과 운영 DB 접근을 통제 가능한 실행 행위로 바꾼 기준 |
+| Agent | 자연어 이해와 업무 실행을 분리하고 fallback chain을 제한한 이유 |
+| Messaging / WebRTC | session, sequence, media path, reconnect를 운영 책임으로 다룬 기준 |
+| Tax / Task / Deployment | 계산 trace, task state, bundle version, rollback을 검증 가능한 기록으로 남긴 이유 |
+
+따라서 이 포트폴리오는 기술 스택 목록이 아니라, 운영 중인 시스템을 안전하게 변경하기 위해 어떤 제약을 받아들였는지 설명하는 문서 묶음이다.
+
 ## 한눈에 보는 주제
 
 | 영역 | 문서 | 핵심 주제 |

@@ -72,6 +72,27 @@ room에 입장하면 전체 데이터를 무조건 내려주는 것이 아니라
 
 전역 순서가 필요한 이벤트와 room 내부 순서가 필요한 이벤트를 구분하지 않으면 구조가 과도하게 복잡해진다.
 
+
+## 버린 선택과 이유
+
+메신저를 단순 WebSocket broadcast로 구현하는 방식은 업무 플랫폼에는 충분하지 않았다. 연결된 사용자에게만 메시지를 보내는 것은 쉬우나, 재접속 이후 누락된 메시지, 읽음 상태, 방 변경 이력, 알림 재처리, multi-device sync를 설명하기 어렵다.
+
+단일 DB transaction으로 모든 메시징 상태를 처리하는 방식도 한계가 있었다. message write, fanout, notification, unread count, search index, audit은 처리 목적과 지연 허용 범위가 다르다. 모든 처리를 동기 transaction에 묶으면 tail latency와 장애 영향 범위가 커진다.
+
+전역 sequence를 기준으로 전체 메시지를 정렬하는 방식도 우선하지 않았다. 운영에서 중요한 것은 전체 시스템의 절대 순서보다 방 단위의 순서 보장, gap 감지, 재동기화 가능성이다.
+
+## 재접속을 기준으로 본 운영 품질
+
+메신저 품질은 평상시 전송 성공률만으로 판단할 수 없다. 업무용 메신저에서는 network 변경, 브라우저 sleep, 모바일 전환, gateway 재시작 이후에도 상태를 맞춰야 한다.
+
+| 확인 항목 | 목적 |
+| --- | --- |
+| 마지막 수신 sequence | client가 어디까지 받았는지 판단한다. |
+| room change log | 방 초대, 퇴장, 권한 변경 이후 sync 범위를 계산한다. |
+| unread 재계산 기준 | cache 값과 DB 값이 어긋날 때 복구한다. |
+| gateway session 상태 | 연결 문제와 application 처리 문제를 분리한다. |
+| message idempotency | 재시도와 중복 전송을 안전하게 처리한다. |
+
 ## DBRuntime과 CacheRuntime
 
 메시징 시스템에서는 DB 저장과 cache 갱신이 병목으로 전환되는 구간이 자주 발생한다. 모든 요청을 즉시 DB에 반영하면 tail latency가 늘고, 장애 시 write 폭주가 발생한다. 반대로 비동기화만 강조하면 사용자에게 보이는 상태와 저장 상태가 어긋난다.

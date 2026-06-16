@@ -70,6 +70,27 @@ request
 
 Blue-green과 canary는 배포 시스템만의 기능이 아니다. 실제 traffic을 어느 backend로 보낼지는 L7이 결정한다. 따라서 versioned bundle, 승인 상태, canary 대상, health check 결과를 L7 정책과 연결했다.
 
+
+## 버린 선택과 이유
+
+모든 문제를 범용 API Gateway로 해결하는 방식은 채택하지 않았다. Kong이나 Nginx 기반 gateway는 routing, 인증, rate limit에는 강하지만, 조직별 tenant, stage, canary, 긴급 차단, 운영 승인 이력을 제품 정책과 함께 표현하려면 별도 정책 모델이 필요했다.
+
+application 내부에서 routing 정책을 처리하는 방식도 피했다. 장애가 발생했을 때 application이 살아 있어야 차단이나 우회가 가능하다면 L7 경계의 의미가 약해진다. 트래픽 차단, canary 중단, 특정 tenant 우회는 application 앞단에서 처리되어야 했다.
+
+Ingress 설정만으로 운영 정책을 관리하는 방식도 충분하지 않았다. YAML 변경은 인프라 관점에서는 명확하지만, 운영자가 고객사·업무·배포 버전 기준으로 변경 사유와 영향을 확인하기 어렵다.
+
+## L7에서 남겨야 하는 기록
+
+L7 계층은 request를 전달하는 통로가 아니라 변경과 장애를 연결하는 관측 지점이다. 최소한 다음 기록이 남아야 했다.
+
+| 기록 | 목적 |
+| --- | --- |
+| route policy version | 어느 정책으로 traffic이 흘렀는지 재현한다. |
+| tenant/stage 매핑 | 장애가 전체 문제인지 특정 고객사 문제인지 구분한다. |
+| canary 비율과 변경자 | traffic 전환의 책임과 시점을 audit한다. |
+| block/allow 사유 | 긴급 차단이 임시 조치인지 정책 변경인지 구분한다. |
+| upstream health와 latency | application 장애와 L7 routing 문제를 분리한다. |
+
 ## 운영 검증
 
 L7 계층에서 가장 조심한 부분은 책임 과잉이었다. L7이 업무 로직을 이해하기 시작하면 application server의 책임을 침범한다. 따라서 L7은 route, tenant, stage, 배포 상태, 차단 정책까지만 다루고, 업무 validation과 transaction은 application에 남겼다.

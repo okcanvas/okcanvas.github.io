@@ -90,6 +90,25 @@ Janus plugin을 직접 구현한 목적은 기능 확장이 아니라 확장 지
 
 이 프로젝트의 결론은 Janus의 우월성을 주장하는 것이 아니다. 원격제어에서는 LiveKit를 사용했고, 원격 화상회의에서는 Janus를 선택했다. 제품별로 직접 소유해야 하는 통제 범위가 달랐고, 그 차이에 맞춰 도구를 분리했다.
 
+
+## 버린 선택과 이유
+
+원격제어와 화상회의를 하나의 WebRTC 플랫폼으로 통합하는 방식은 단순해 보이지만, 제품별 책임 경계를 흐릴 수 있었다. 원격제어는 상담 흐름, 승인, 화면 공유 안정성이 핵심이고, 화상회의는 다자간 media path와 gateway 제어면이 핵심이다. 같은 기술 범주라도 운영 기준은 달랐다.
+
+상용 솔루션에 모든 media 책임을 위임하는 방식도 검토 대상이었지만, 화상회의 영역에서는 내부 session lifecycle과 plugin event를 제품 정책과 연결해야 했다. 장애 시 ICE, DTLS, SRTP, RTP, RTCP, publisher/subscriber 상태를 분리해서 볼 수 있어야 했기 때문이다.
+
+반대로 모든 WebRTC 계층을 직접 구현하는 방식도 선택하지 않았다. 원격제어 제품에서는 LiveKit의 추상화가 충분히 제품 책임과 맞았고, 직접 구현은 운영 리스크와 개발 비용만 키울 수 있었다.
+
+## 운영에서 확인해야 하는 media 흔적
+
+| 흔적 | 목적 |
+| --- | --- |
+| session/handle lifecycle | 회의 참여와 media handle 상태를 추적한다. |
+| ICE/DTLS/SRTP 상태 | 연결 실패와 암호화/media path 문제를 분리한다. |
+| RTP packet 흐름 | media forwarding 지연과 손실을 판단한다. |
+| RTCP feedback | 품질 저하 원인을 network, encoder, subscriber 상태와 연결한다. |
+| application audit | 회의 권한, 조직 정책, 참여 이력을 media event와 연결한다. |
+
 ## 설계 결론
 
 WebRTC 제품에서 media server는 단순 인프라가 아니다. session, 권한, signaling, media path, audit, 장애 대응이 만나는 제어면이다. 더 빠르게 만들 수 있는 선택과 더 깊게 통제해야 하는 선택을 구분해야 한다. LiveKit와 Janus의 선택은 그 구분을 제품별로 적용한 결과다.

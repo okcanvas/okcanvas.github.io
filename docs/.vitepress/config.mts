@@ -3,15 +3,15 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   lang: 'ko-KR',
   title: 'OKCANVAS Architecture Record',
-  description: 'Senior Backend & Platform Architect로서 운영 가능한 시스템을 설계한 전문가 기술 기록.',
+  description: '운영 가능한 업무 시스템과 플랫폼 경계, 책임 분리, 검증 흔적을 정리한 기술 기록.',
   lastUpdated: true,
   cleanUrls: true,
 
   head: [
     ['meta', { name: 'theme-color', content: '#111827' }],
     ['meta', { name: 'description', content: 'ERP, Groupware, ESS, Kafka, DBHub, PlanVM, AI Agent, Task Manager, Messaging System, WebRTC, 무중단 배포를 다룬 풀스택 개발과 시스템 설계 기록.' }],
-    ['meta', { property: 'og:title', content: 'OKCANVAS — Senior Backend & Platform Architect' }],
-    ['meta', { property: 'og:description', content: '운영 중인 시스템을 안전하게 바꾸기 위한 플랫폼 설계, 책임 경계, 운영 검증의 전문가 기록.' }],
+    ['meta', { property: 'og:title', content: 'OKCANVAS — Backend Platform Engineering Record' }],
+    ['meta', { property: 'og:description', content: '운영 중인 시스템을 안전하게 바꾸기 위한 플랫폼 설계, 책임 경계, 검증 흔적의 기술 기록.' }],
     ['meta', { property: 'og:type', content: 'website' }]
   ],
 
@@ -69,7 +69,7 @@ export default defineConfig({
           text: 'Profile',
           collapsed: false,
           items: [
-            { text: 'Full-stack Architect', link: '/' },
+            { text: 'Architecture Record', link: '/' },
             { text: 'Portfolio', link: '/portfolio/' }
           ]
         }
