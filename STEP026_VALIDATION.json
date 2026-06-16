@@ -1,0 +1,97 @@
+{
+  "step": "STEP026",
+  "phase": "EXPERT_RECORD_FULL_REWRITE",
+  "status": "PASS_WITH_BUILD_NOT_EXECUTED",
+  "markdown_files_checked": 15,
+  "weak_expression_hits": [],
+  "internal_link_missing": [],
+  "build": {
+    "status": "NOT_RUN_IN_CONTAINER",
+    "reason": "vitepress binary is not available because node_modules is not included in the uploaded ZIP; npm run docs:build returned 127 (vitepress: not found).",
+    "local_command": "npm install && npm run docs:build"
+  },
+  "stats": [
+    {
+      "file": "docs/index.md",
+      "lines": 116,
+      "chars": 4351
+    },
+    {
+      "file": "docs/portfolio/01-kafka-erp-groupware-ess-incident-monitoring.md",
+      "lines": 104,
+      "chars": 3631
+    },
+    {
+      "file": "docs/portfolio/02-ducos-nacos-config-discovery.md",
+      "lines": 109,
+      "chars": 3854
+    },
+    {
+      "file": "docs/portfolio/03-openresty-l7-layer.md",
+      "lines": 87,
+      "chars": 3374
+    },
+    {
+      "file": "docs/portfolio/04-cals-attendance-connector-hub.md",
+      "lines": 86,
+      "chars": 2494
+    },
+    {
+      "file": "docs/portfolio/05-planvm-dsl-runtime-platform.md",
+      "lines": 104,
+      "chars": 4059
+    },
+    {
+      "file": "docs/portfolio/06-planvm-dbhub.md",
+      "lines": 98,
+      "chars": 3377
+    },
+    {
+      "file": "docs/portfolio/07-rasa-agent-sdk-natural-language-agent.md",
+      "lines": 101,
+      "chars": 3127
+    },
+    {
+      "file": "docs/portfolio/08-large-scale-messaging-system.md",
+      "lines": 98,
+      "chars": 3546
+    },
+    {
+      "file": "docs/portfolio/09-year-end-tax-calculator.md",
+      "lines": 81,
+      "chars": 2059
+    },
+    {
+      "file": "docs/portfolio/10-large-scale-batch-automation-pipeline.md",
+      "lines": 103,
+      "chars": 2988
+    },
+    {
+      "file": "docs/portfolio/11-zero-downtime-bluegreen-canary-deployment.md",
+      "lines": 100,
+      "chars": 3453
+    },
+    {
+      "file": "docs/portfolio/12-webrtc-and-janus.md",
+      "lines": 95,
+      "chars": 4625
+    },
+    {
+      "file": "docs/portfolio/index.md",
+      "lines": 109,
+      "chars": 4052
+    },
+    {
+      "file": "README.md",
+      "lines": 39,
+      "chars": 602
+    }
+  ],
+  "changed_policy": [
+    "문장 전체를 감상형 회고가 아니라 전문가의 기술 판단 기록으로 재작성",
+    "문서별 구조를 문제 정의, 책임 경계, 핵심 설계 결정, 운영 검증, 역할과 책임, 설계 결론 중심으로 정렬",
+    "불필요하게 길어진 AI 시대/개발 철학/반복 회고성 문단을 제거하거나 설계 결론으로 압축",
+    "누락되기 쉬운 책임 경계 표, 선택 근거, 운영 검증 기준을 문서별로 보강",
+    "LiveKit는 원격제어/원격기술지원, Janus는 원격 화상회의 적용으로 명확히 분리"
+  ]
+}
