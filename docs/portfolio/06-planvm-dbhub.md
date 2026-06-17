@@ -98,6 +98,13 @@ AI가 SQL을 생성할 수 있게 되면 DB 접근 통제는 더 중요해진다
 
 AI는 SQL 후보를 만들 수 있지만, 운영 DB 실행은 통제된 실행 계층을 통과해야 한다. 이 기준은 DBHub의 핵심 방향과 맞닿아 있다.
 
+
+
+## 시스템 설계자의 그림
+
+DBHub의 경계는 SQL 실행 버튼 앞에 있지 않다. 자연어 요청이나 운영자 요청이 SQL 후보로 바뀌는 순간부터 목적, 권한, datasource 범위, 민감도, 변경 위험, 결과 노출 범위가 함께 결정되어야 한다.
+
+<MermaidDiagram encoded="Zmxvd2NoYXJ0IFRCCiAgUmVxdWVzdFsiVXNlciAvIEFnZW50IERCIFJlcXVlc3QiXQoKICBzdWJncmFwaCBQcm9wb3NhbFsiUHJvcG9zYWwgUGhhc2UiXQogICAgSW50ZW50WyJJbnRlbnQgLyBQdXJwb3NlIl0KICAgIFRlbXBsYXRlWyJTUUwgVGVtcGxhdGUgLyBSZXZpc2lvbiJdCiAgICBQcmV2aWV3WyJFeHBsYWluIC8gSW1wYWN0IFByZXZpZXciXQogIGVuZAoKICBzdWJncmFwaCBHdWFyZFsiQWNjZXNzIEd1YXJkIl0KICAgIFJvbGVbIlJvbGUgLyBBcHAgLyBTdGFnZSBQZXJtaXNzaW9uIl0KICAgIFNjb3BlWyJEYXRhc291cmNlIFNjb3BlIl0KICAgIFBvbGljeVsiUmVhZCAvIFdyaXRlIC8gU2Vuc2l0aXZlIFBvbGljeSJdCiAgICBVbnNhZmVbIkJsb2NrIC8gUmVxdWlyZSBSZXZpZXciXQogIGVuZAoKICBzdWJncmFwaCBFeGVjdXRpb25bIkNvbnRyb2xsZWQgRXhlY3V0aW9uIl0KICAgIFJlYWRbIlJlYWQgd2l0aCBNYXNraW5nIC8gTGltaXQiXQogICAgV3JpdGVbIkFwcHJvdmVkIFdyaXRlIC8gRHJ5LXJ1biBFdmlkZW5jZSJdCiAgICBSZXN1bHRbIlJlc3VsdCBTdW1tYXJ5Il0KICBlbmQKCiAgc3ViZ3JhcGggRXZpZGVuY2VbIkV2aWRlbmNlIl0KICAgIEF1ZGl0WyJBdWRpdCBMb2ciXQogICAgSGFzaFsiU1FMIEhhc2ggLyBQYXJhbWV0ZXIgSGFzaCJdCiAgICBSZXZpZXdbIk9wZXJhdG9yIFJldmlldyJdCiAgZW5kCgogIFJlcXVlc3QgLS0+IEludGVudAogIEludGVudCAtLT4gVGVtcGxhdGUKICBUZW1wbGF0ZSAtLT4gUHJldmlldwogIFByZXZpZXcgLS0+IFJvbGUKICBSb2xlIC0tPiBTY29wZQogIFNjb3BlIC0tPiBQb2xpY3kKICBQb2xpY3kgLS0+fHVuc2FmZXwgVW5zYWZlCiAgUG9saWN5IC0tPnxyZWFkfCBSZWFkCiAgUG9saWN5IC0tPnxhcHByb3ZlZCB3cml0ZXwgV3JpdGUKICBSZWFkIC0tPiBSZXN1bHQKICBXcml0ZSAtLT4gUmVzdWx0CiAgUmVzdWx0IC0tPiBBdWRpdAogIFJlc3VsdCAtLT4gSGFzaAogIEF1ZGl0IC0tPiBSZXZpZXcK" title="DB 접근 위험 등급 게이트" caption="DB 접근을 요청, 제안, 통제, 실행, 증거의 단계로 나누어 위험을 누적해서 판단한다." />
 ## 운영 검증
 
 검증 기준은 “실행 가능한가”가 아니라 “운영자가 신뢰하고 감사할 수 있는가”였다. 자유도를 너무 높이면 DB tool이 되고, 너무 낮추면 실제 장애 대응에 사용되지 않는다. 따라서 반복 조회는 빠르게 실행하되, 민감하거나 위험한 작업은 승인과 제한을 걸었다.

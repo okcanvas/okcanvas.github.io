@@ -1,11 +1,5 @@
 cd D:\okcanvas.github.io
 
-git add .
-git commit -m "Update portfolio"
-git push
-
-yarn docs:build
-
 git fetch origin
 
 git worktree add --detach ..\okcanvas-gh-pages

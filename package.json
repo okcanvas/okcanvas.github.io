@@ -8,8 +8,7 @@
     "docs:preview": "vitepress preview docs"
   },
   "devDependencies": {
-    "vitepress": "^1.6.4",
-    "mermaid": "^10.9.3"
+    "vitepress": "^1.6.4"
   },
   "description": "OKCANVAS full-stack architecture portfolio site built with VitePress."
 }

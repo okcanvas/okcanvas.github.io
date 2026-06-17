@@ -4,7 +4,7 @@ export default defineConfig({
   lang: 'ko-KR',
   title: 'OKCANVAS Architecture Record',
   description: '운영 가능한 업무 시스템과 플랫폼 경계, 책임 분리, 검증 흔적을 정리한 기술 기록.',
-  lastUpdated: true,
+  lastUpdated: false,
   cleanUrls: true,
 
   head: [

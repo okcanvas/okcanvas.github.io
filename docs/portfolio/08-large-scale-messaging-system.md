@@ -99,6 +99,13 @@ room에 입장하면 전체 데이터를 무조건 내려주는 것이 아니라
 
 DBRuntime은 lazy insert, batch flush, shard, retry, DLQ를 관리하는 실행 계층으로 보았다. CacheRuntime은 room state, unread count, presence, hot room data를 관리하되, invalidate와 재구성 경로를 함께 가져야 했다.
 
+
+
+## 시스템 설계자의 그림
+
+메시징 시스템의 설계 기준은 전송 성공이 아니라 재접속 이후의 복구 가능성이다. gateway, broker, DB, cache를 각각 따로 최적화하면 빠르게 보일 수 있지만, 사용자가 마지막으로 받은 sequence 이후 무엇을 받아야 하는지 설명하지 못하면 업무 플랫폼으로는 부족하다.
+
+<MermaidDiagram encoded="Zmxvd2NoYXJ0IFRCCiAgQ2xpZW50WyJDbGllbnQiXQogIEdhdGV3YXlbIkdhdGV3YXkgU2Vzc2lvbiBCb3VuZGFyeSJdCgogIHN1YmdyYXBoIEluZ3Jlc3NbIkluZ3Jlc3MgJiBPcmRlcmluZyJdCiAgICBUaWNrZXRbIlRpY2tldCAvIEF1dGggLyBUZW5hbnQiXQogICAgUm9vbVNlcVsiUm9vbSBTZXF1ZW5jZSJdCiAgICBCcm9rZXJbIkJyb2tlciBUb3BpYyJdCiAgZW5kCgogIHN1YmdyYXBoIFN0YXRlWyJTdGF0ZSBNYXRlcmlhbGl6YXRpb24iXQogICAgUGVyc2lzdFsiUGVyc2lzdCBXb3JrZXIgLyBMYXp5IEJhdGNoIl0KICAgIENoYW5nZUxvZ1siUm9vbSBDaGFuZ2UgTG9nIl0KICAgIENhY2hlWyJSb29tIFN0YXRlIC8gVW5yZWFkIC8gUHJlc2VuY2UgQ2FjaGUiXQogICAgRmFub3V0WyJGYW4tb3V0IFdvcmtlciJdCiAgZW5kCgogIHN1YmdyYXBoIFJlY292ZXJ5WyJSZWNvbm5lY3QgUmVjb3ZlcnkiXQogICAgU3luY1siU3luYyBBUEkgZnJvbSBMYXN0IFNlcXVlbmNlIl0KICAgIEdhcFsiR2FwIERldGVjdGlvbiJdCiAgICBSZWJ1aWxkWyJDYWNoZSBSZWJ1aWxkIC8gREIgUmVjb25jaWxlIl0KICAgIERMUVsiUmV0cnkgLyBETFEiXQogIGVuZAoKICBDbGllbnQgLS0+IEdhdGV3YXkKICBHYXRld2F5IC0tPiBUaWNrZXQKICBUaWNrZXQgLS0+IFJvb21TZXEKICBSb29tU2VxIC0tPiBCcm9rZXIKICBCcm9rZXIgLS0+IFBlcnNpc3QKICBCcm9rZXIgLS0+IEZhbm91dAogIFBlcnNpc3QgLS0+IENoYW5nZUxvZwogIFBlcnNpc3QgLS0+IENhY2hlCiAgRmFub3V0IC0tPiBDbGllbnQKICBDbGllbnQgLS0+fHJlY29ubmVjdHwgU3luYwogIFN5bmMgLS0+IENoYW5nZUxvZwogIFN5bmMgLS0+IEdhcAogIEdhcCAtLT4gUmVidWlsZAogIEJyb2tlciAtLT4gRExRCiAgRExRIC0tPiBSZWJ1aWxkCg==" title="재접속 기준 메시징 일관성 구조" caption="방 단위 sequence, change log, cache rebuild, DLQ를 연결해 누락과 중복을 운영자가 설명할 수 있게 한다." />
 ## 운영 검증
 
 검증 기준은 평균 TPS 하나로 끝나지 않았다. 다음 기준을 함께 봐야 했다.

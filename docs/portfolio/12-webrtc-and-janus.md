@@ -91,6 +91,13 @@ Janus plugin을 직접 구현한 목적은 기능 확장이 아니라 확장 지
 이 프로젝트의 결론은 Janus의 우월성을 주장하는 것이 아니다. 원격제어에서는 LiveKit를 사용했고, 원격 화상회의에서는 Janus를 선택했다. 제품별로 직접 소유해야 하는 통제 범위가 달랐고, 그 차이에 맞춰 도구를 분리했다.
 
 
+
+## 시스템 설계자의 그림
+
+WebRTC 선택은 media server 비교가 아니라 제품별 제어면 분리 문제였다. 원격제어에서는 상담 권한, 동의, 세션 이력 같은 application 통제가 중요했고, 화상회의에서는 gateway 내부 session, plugin, RTP/RTCP 관측 지점이 운영 품질을 좌우했다.
+
+<MermaidDiagram encoded="Zmxvd2NoYXJ0IFRCCiAgc3ViZ3JhcGggU3VwcG9ydFsiUmVtb3RlIENvbnRyb2wgLyBUZWNobmljYWwgU3VwcG9ydCJdCiAgICBTdXBwb3J0UG9saWN5WyJTdXBwb3J0IFBlcm1pc3Npb24gLyBDb25zZW50Il0KICAgIExpdmVLaXRbIkxpdmVLaXQgUm9vbSAvIFRyYWNrIExheWVyIl0KICAgIENvbnRyb2xTZXNzaW9uWyJDb250cm9sIFNlc3Npb24gU3RhdGUiXQogICAgU3VwcG9ydEF1ZGl0WyJTdXBwb3J0IEF1ZGl0Il0KICBlbmQKCiAgc3ViZ3JhcGggTWVldGluZ1siUmVtb3RlIFZpZGVvIENvbmZlcmVuY2UiXQogICAgTWVldGluZ1BvbGljeVsiTWVldGluZyBQb2xpY3kgLyBQYXJ0aWNpcGFudCBSdWxlIl0KICAgIEphbnVzWyJKYW51cyBHYXRld2F5Il0KICAgIFBsdWdpblsiUGx1Z2luIC8gUm9vbSAvIEhhbmRsZSBCb3VuZGFyeSJdCiAgICBNZWRpYVsiUlRQIC8gUlRDUCBPYnNlcnZhdGlvbiJdCiAgICBNZWV0aW5nVHJhY2VbIk1lZGlhIFNlc3Npb24gVHJhY2UiXQogIGVuZAoKICBTdXBwb3J0UG9saWN5IC0tPiBDb250cm9sU2Vzc2lvbgogIENvbnRyb2xTZXNzaW9uIC0tPiBMaXZlS2l0CiAgTGl2ZUtpdCAtLT4gU3VwcG9ydEF1ZGl0CgogIE1lZXRpbmdQb2xpY3kgLS0+IEphbnVzCiAgSmFudXMgLS0+IFBsdWdpbgogIFBsdWdpbiAtLT4gTWVkaWEKICBNZWRpYSAtLT4gTWVldGluZ1RyYWNlCg==" title="LiveKit와 Janus의 제품별 제어면 분리" caption="원격제어는 LiveKit 추상화 위에 application 통제를 두고, 화상회의는 Janus gateway와 media path 관측을 더 직접 소유했다." />
+
 ## 버린 선택과 이유
 
 원격제어와 화상회의를 하나의 WebRTC 플랫폼으로 통합하는 방식은 단순해 보이지만, 제품별 책임 경계를 흐릴 수 있었다. 원격제어는 상담 흐름, 승인, 화면 공유 안정성이 핵심이고, 화상회의는 다자간 media path와 gateway 제어면이 핵심이다. 같은 기술 범주라도 운영 기준은 달랐다.

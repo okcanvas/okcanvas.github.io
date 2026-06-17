@@ -1,81 +1,165 @@
 :root {
-  --vp-c-brand-1: #2563eb;
-  --vp-c-brand-2: #1d4ed8;
-  --vp-c-brand-3: #60a5fa;
-  --vp-home-hero-name-color: transparent;
-  --vp-home-hero-name-background: linear-gradient(120deg, #2563eb 30%, #0f172a);
+  --okcanvas-print-border: rgba(148, 163, 184, 0.32);
+  --okcanvas-print-bg: rgba(15, 23, 42, 0.03);
 }
 
-.VPDoc .content-container {
-  max-width: 920px !important;
-}
-
-.vp-doc .lead {
-  font-size: 1.08rem;
-  line-height: 1.9;
-  color: var(--vp-c-text-2);
-  margin: 1.2rem 0 1.6rem;
-}
-
-.vp-doc .taglist {
+.doc-print-toolbar {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 16px 0 28px;
+  align-items: center;
+  gap: 12px;
+  margin: -4px 0 24px;
+  padding: 12px 14px;
+  border: 1px solid var(--okcanvas-print-border);
+  border-radius: 12px;
+  background: var(--okcanvas-print-bg);
 }
 
-.vp-doc .taglist span {
-  display: inline-block;
-  padding: 4px 10px;
-  border: 1px solid var(--vp-c-divider);
+.doc-print-button {
+  appearance: none;
+  border: 1px solid var(--vp-c-brand-1);
   border-radius: 999px;
+  padding: 6px 14px;
+  background: var(--vp-c-brand-1);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+.doc-print-button:hover {
+  background: var(--vp-c-brand-2);
+  border-color: var(--vp-c-brand-2);
+}
+
+.doc-print-hint {
   color: var(--vp-c-text-2);
-  background: var(--vp-c-bg-soft);
-  font-size: 0.86rem;
+  font-size: 13px;
+  line-height: 1.5;
 }
 
-.vp-doc .portfolio-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 14px;
-  margin: 20px 0 32px;
+@media (max-width: 640px) {
+  .doc-print-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 }
 
-.vp-doc .portfolio-card {
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 14px;
-  padding: 18px;
-  background: var(--vp-c-bg-soft);
+@media print {
+  @page {
+    margin: 16mm;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+  }
+
+  .VPNav,
+  .VPLocalNav,
+  .VPSidebar,
+  .VPDocAside,
+  .VPDocFooter,
+  .VPFooter,
+  .VPBackToTop,
+  .doc-print-toolbar,
+  .last-updated,
+  .VPLastUpdated,
+  [class*='last-updated'],
+  [class*='LastUpdated'] {
+    display: none !important;
+  }
+
+  .VPContent,
+  .VPDoc,
+  .VPDoc .container,
+  .VPDoc .content,
+  .VPDoc .content-container {
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .VPDoc .container {
+    display: block !important;
+  }
+
+  .vp-doc {
+    color: #111827 !important;
+    font-size: 12px;
+    line-height: 1.58;
+  }
+
+  .vp-doc h1,
+  .vp-doc h2,
+  .vp-doc h3,
+  .vp-doc h4 {
+    color: #111827 !important;
+    break-after: avoid-page;
+    page-break-after: avoid;
+  }
+
+  .vp-doc h1 {
+    font-size: 25px;
+  }
+
+  .vp-doc h2 {
+    margin-top: 28px;
+    font-size: 19px;
+  }
+
+  .vp-doc h3 {
+    font-size: 15px;
+  }
+
+  .vp-doc p,
+  .vp-doc li {
+    color: #111827 !important;
+  }
+
+  .vp-doc a {
+    color: #111827 !important;
+    text-decoration: none !important;
+  }
+
+  .vp-doc table,
+  .vp-doc blockquote,
+  .vp-doc pre,
+  .portfolio-card {
+    break-inside: avoid-page;
+    page-break-inside: avoid;
+  }
+
+  .portfolio-grid {
+    display: block !important;
+  }
+
+  .portfolio-card {
+    margin: 0 0 12px !important;
+    padding: 12px !important;
+    border: 1px solid #d1d5db !important;
+    box-shadow: none !important;
+  }
+
+  .vp-doc .header-anchor {
+    display: none !important;
+  }
 }
 
-.vp-doc .portfolio-card h3 {
-  margin: 0 0 8px;
-  font-size: 1.05rem;
+.architecture-diagram {
+  break-inside: avoid;
 }
 
-.vp-doc .portfolio-card p {
-  margin: 0 0 12px;
-  color: var(--vp-c-text-2);
-  line-height: 1.75;
-}
+@media print {
+  .architecture-diagram {
+    break-inside: avoid-page;
+    page-break-inside: avoid;
+    border: 1px solid #d1d5db !important;
+    background: #fff !important;
+    box-shadow: none !important;
+  }
 
-.vp-doc .portfolio-card a {
-  font-weight: 600;
-}
-
-.vp-doc blockquote {
-  border-left: 4px solid var(--vp-c-brand-1);
-  background: var(--vp-c-bg-soft);
-  padding: 12px 16px;
-  border-radius: 10px;
-}
-
-.vp-doc table {
-  display: table;
-  width: 100%;
-}
-
-.vp-doc th,
-.vp-doc td {
-  vertical-align: top;
+  .architecture-diagram-stage {
+    min-width: 0 !important;
+  }
 }

@@ -1,8 +1,15 @@
 # OKCANVAS Architecture Record
 
-VitePress 기반 기술 포트폴리오입니다. 이 문서는 프로젝트 홍보 문구가 아니라, 운영 가능한 시스템을 만들기 위해 어떤 문제를 정의하고 어떤 책임 경계를 설계했는지 남긴 전문가 기록입니다.
+VitePress 기반 기술 포트폴리오입니다. 
 
 ## 실행
+
+```bash
+npm install
+npm run docs:dev
+```
+
+Yarn을 사용하는 환경에서는 아래 명령도 사용할 수 있습니다.
 
 ```bash
 yarn install
@@ -12,8 +19,8 @@ yarn docs:dev
 ## 빌드
 
 ```bash
-yarn docs:build
-yarn docs:preview
+npm run docs:build
+npm run docs:preview
 ```
 
 ## 문서 구조
@@ -23,6 +30,7 @@ docs/
   index.md                  # Profile 홈
   portfolio/                # 프로젝트별 기술 판단 기록
   .vitepress/config.mts     # VitePress 설정
+  .vitepress/theme/         # 문서 출력, Mermaid 구성도, 출력 CSS
 ```
 
 ## 작성 기준
@@ -36,4 +44,13 @@ docs/
 - 역할과 책임
 - 설계 결론
 
-사용 기술을 나열하기보다, 운영 중인 시스템에서 어떤 제약을 보았고 어떤 기준으로 API, worker, gateway, DB, cache, deployment, Agent 실행 계층을 나누었는지 기록합니다.
+사용 기술을 나열하기보다, 운영 중인 시스템에서 어떤 제약을 보았고 어떤 기준으로 API, worker, gateway, DB, cache, deployment, Agent 실행 계층을 나누었는지 기록합니다. Mermaid 구성도는 단순 연결도가 아니라 승인, 권한, 실패 경로, 감사 흔적, rollback, 복구, 소유 경계가 드러나는 경우에만 사용합니다.
+
+## 배포 전 확인
+
+```bash
+npm install
+npm run docs:build
+```
+
+빌드 결과는 `docs/.vitepress/dist`에 생성됩니다.
