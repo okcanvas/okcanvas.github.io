@@ -1,6 +1,6 @@
 # OKCANVAS Architecture Record
 
-VitePress 기반 기술 포트폴리오입니다. 
+VitePress 기반 기술 포트폴리오입니다. 이 사이트는 기술 사용 이력이나 직급 홍보 문서가 아니라, 운영 가능한 시스템을 만들기 위해 문제를 어떻게 정의하고 책임 경계를 어떻게 설계했는지 남긴 기술 기록입니다.
 
 ## 실행
 
@@ -30,6 +30,7 @@ docs/
   index.md                  # Profile 홈
   portfolio/                # 프로젝트별 기술 판단 기록
   .vitepress/config.mts     # VitePress 설정
+  public/okcanvas.zip       # 상단 메뉴에서 다운로드되는 포트폴리오 ZIP
   .vitepress/theme/         # 문서 출력, Mermaid 구성도, 출력 CSS
 ```
 
@@ -54,3 +55,7 @@ npm run docs:build
 ```
 
 빌드 결과는 `docs/.vitepress/dist`에 생성됩니다.
+
+## 다운로드 파일
+
+상단 메뉴의 `Download`는 `docs/public/okcanvas.zip`을 직접 내려받습니다. 이 ZIP은 포트폴리오 사이트 소스와 문서 파일을 포함하며, `node_modules`, 빌드 산출물, 중첩된 다운로드 ZIP은 포함하지 않습니다.

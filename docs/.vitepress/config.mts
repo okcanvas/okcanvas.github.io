@@ -21,6 +21,7 @@ export default defineConfig({
     nav: [
       { text: 'Profile', link: '/' },
       { text: 'Portfolio', link: '/portfolio/' },
+      { text: 'Download', link: '/okcanvas.zip' },
       { text: 'PlanVM', link: 'https://planvm.bizbee.co.kr' }
     ],
 
